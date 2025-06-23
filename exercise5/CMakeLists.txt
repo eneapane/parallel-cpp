@@ -7,4 +7,6 @@ add_executable(exercise5 main.cpp
         ThreadSafeArray.cpp
         ThreadSafeArray.h
         ThreadSafeQueue.cpp
-        ThreadSafeQueue.h)
+        ThreadSafeQueue.h
+        ThreadSafeStack.cpp
+        ThreadSafeStack.h)
