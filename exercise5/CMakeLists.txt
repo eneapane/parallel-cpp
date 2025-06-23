@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(exercise5 main.cpp
         ThreadSafeArray.cpp
-        ThreadSafeArray.h)
+        ThreadSafeArray.h
+        ThreadSafeQueue.cpp
+        ThreadSafeQueue.h)
