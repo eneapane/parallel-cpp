@@ -1,0 +1,28 @@
+In this task, we will extend a game to help understand the memory model in C++. We will firstly prepare a mental
+model, and then implement a demo.
+A grumpy secretary (think of “Einwohnermeldeamt”) has a queue of tasks they need to finish. As their employer, you are
+able to submit new tasks and query the ‘latest’ queued task. However, latest here means: They keep a post-it sticker with
+your name next to the ‘latest’ task they told you about, and for now, they have no incentive to tell you the latest one on
+the list. They also do the same for the clients. You want to keep your employee honest and at the end of the day, you get
+the list of all tasks and can check their progress.
+
+1. Based on just the list they keep, in what way can you force the secretary to be honest and not change the list at
+the end of the day (think rearranging the tasks to move yours to the back)? I.e., what information can you ask the
+secretary to also provide when you give a task?
+->
+
+
+2. Based on just the list they keep, in what way can you force the secretary to be honest about the current latest task
+(think rearranging the tasks to move the ‘latest’ one to a nicer position)? I.e., what information can you ask the
+secretary to also provide when you query the ‘latest’ task?
+
+
+3. Based on the defined interactions above, you are never able to add a direct follow-up task (think: You query the
+latest task, change it, push it again—but there are now multiple new tasks inbetween). How would you formulate
+a third interaction to remedy this?
+
+
+Implement a simple program with an atomic integer and multiple threads (you can try 32). The task of the threads: For
+a given number (you can try 1000), read the value of the variable, increment the value by one, and write the value back.
+What do you observe?
+
