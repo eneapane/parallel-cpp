@@ -53,25 +53,26 @@ void task2_demo() {
 
 
 int main() {
-    std::unordered_map<std::string, int> env;
-    auto start = std::chrono::high_resolution_clock::now();
-    run_serial_tokenization(env);
-    auto end = std::chrono::high_resolution_clock::now();
-
-    std::chrono::duration<double, std::milli> elapsed_ms = end - start;
-    std::cout << elapsed_ms.count() << " ms" << std::endl;
-    // for (const auto& [key, value] : env) {
-    //     std::cout << key << ": " << value << '\n';
-    // }
-    std::cout << env.size()<< std::endl;
-
-
-    ThreadSafeCounterDict<std::string, int> parallel_env(0, 8196);
-    start = std::chrono::high_resolution_clock::now();
-    run_parallel_code(parallel_env);
-    end = std::chrono::high_resolution_clock::now();
-    elapsed_ms = end - start;
-    std::cout << elapsed_ms.count() << " ms" << std::endl;
-    std::cout << parallel_env.convert_to_pairs().size() << std::endl;
+    task1_demo();
+    // std::unordered_map<std::string, int> env;
+    // auto start = std::chrono::high_resolution_clock::now();
+    // run_serial_tokenization(env);
+    // auto end = std::chrono::high_resolution_clock::now();
+    //
+    // std::chrono::duration<double, std::milli> elapsed_ms = end - start;
+    // std::cout << elapsed_ms.count() << " ms" << std::endl;
+    // // for (const auto& [key, value] : env) {
+    // //     std::cout << key << ": " << value << '\n';
+    // // }
+    // std::cout << env.size()<< std::endl;
+    //
+    //
+    // ThreadSafeCounterDict<std::string, int> parallel_env(0, 8196);
+    // start = std::chrono::high_resolution_clock::now();
+    // run_parallel_code(parallel_env);
+    // end = std::chrono::high_resolution_clock::now();
+    // elapsed_ms = end - start;
+    // std::cout << elapsed_ms.count() << " ms" << std::endl;
+    // std::cout << parallel_env.convert_to_pairs().size() << std::endl;
 
 }

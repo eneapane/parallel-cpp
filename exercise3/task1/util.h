@@ -31,11 +31,7 @@ static void print_vector(const std::vector<T> &vector) {
 
 template<typename T>
 static T get_serial_sum(const std::vector<T> &vector) {
-    T result = 0;
-    for (int i = 0; i < vector.size(); ++i) {
-        result += vector[i];
-    }
-    return result;
+    return std::reduce(vector.begin(), vector.end());
 }
 
 
@@ -55,11 +51,7 @@ static T get_parallel_sum(const std::vector<T> &vector) {
                 const size_t end = ((thread_id + 1) * vector.size()) / num_threads;
 
                 // Compute partial sum for this chunk
-                T local_sum = 0;
-                for (size_t i = start; i < end; ++i) {
-                    local_sum += vector[i];
-                }
-                partial_sums[thread_id] = local_sum;
+                partial_sums[thread_id] = std::reduce(vector.begin() + start, vector.begin() + end);
             }
         );
     }
