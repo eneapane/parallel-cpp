@@ -15,7 +15,7 @@ private:
     V v;
 
 public:
-     static int counter;
+    static inline unsigned int counter = 0;
 
     Foo(const T &t, const U &u, const V &v)
         : t(t),
@@ -52,10 +52,13 @@ public:
 
 
     Foo& operator=(Foo &&other)  noexcept {
-        std::swap(t, other.t);
-        std::swap(u, other.u);
-        std::swap(v, other.v);
-        ++counter;
+        if (this != &other) {
+            t = std::move(other.t);
+            u = std::move(other.u);
+            v = std::move(other.v);
+            ++counter;
+        }
+
         return *this;
     }
 
@@ -69,10 +72,7 @@ public:
         return *this;
     }
 
-    friend bool operator==(const Foo& lhs, const Foo& rhs) {
-        return lhs.t == rhs.t;
-    }
-
+    bool operator==(const Foo& other) const{ return other.t == t; }
     bool operator<(const Foo& rhs) const { return rhs.t < t; }
     bool operator>(const Foo& rhs) const { return rhs.t > t; }
 
@@ -89,7 +89,64 @@ public:
     static int getCounter() {
         return counter;
     }
+
+    template<std::size_t Index>
+    [[nodiscard]] constexpr auto& get()& { //second ampersand means only call on lvalues
+        if constexpr (Index == 0) {
+            return t;
+        }
+        if constexpr (Index == 1) {
+            return u;
+        }
+        if constexpr (Index == 2) {
+            return v;
+        }
+    }
+
+    template<std::size_t Index>
+    [[nodiscard]] constexpr const auto& get() const& { //second const means that can additionally be called with const lvalue objects
+        if constexpr (Index == 0) {
+            return t;
+        }
+        if constexpr (Index == 1) {
+            return u;
+        }
+        if constexpr (Index == 2) {
+            return v;
+        }
+    }
+
+    template<std::size_t Index>
+    [[nodiscard]] constexpr auto&& get()&& { //second ampersand means only call on lvalues
+        if constexpr (Index == 0) {
+            return std::move(t);
+        }
+        if constexpr (Index == 1) {
+            return std::move(u);
+        }
+        if constexpr (Index == 2) {
+            return std::move(v);
+        }
+    }
   };
 
+namespace std {
+    template<typename T, typename U, typename V>
+    struct tuple_size<::Foo<T, U, V>> {
+        static constexpr size_t value = 3;
+    };
+    template <typename T, typename U, typename V>
+    struct tuple_element<0, ::Foo<T, U, V>> {
+        using type = T;
+    };
+    template <typename T, typename U, typename V>
+    struct tuple_element<1, ::Foo<T, U, V>> {
+        using type = U;
+    };
+    template <typename T, typename U, typename V>
+    struct tuple_element<2, ::Foo<T, U, V>> {
+        using type = V;
+    };
+}
 
 #endif //FOO_H
