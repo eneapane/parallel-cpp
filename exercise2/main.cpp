@@ -101,10 +101,10 @@ int Bcast_simple(void *buffer, int count, MPI_Datatype datatype, int root,
 
 int Bcast_tree(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm) {
     int myrank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+    MPI_Comm_rank(comm, &myrank);
 
     int size;
-    MPI_Comm_size(MPI_COMM_WORLD, &size);
+    MPI_Comm_size(comm, &size);
 
 
     if (myrank != root) {
