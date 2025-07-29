@@ -1,5 +1,7 @@
 #include "ThreadSafeArray.h"
 
+#include <shared_mutex>
+
 
 template class ThreadSafeArray<int, 2>;
 
@@ -12,7 +14,7 @@ void ThreadSafeArray<T, N>::set(std::size_t index, const T &value) {
 
 template<typename T, std::size_t N>
 T ThreadSafeArray<T, N>::get(std::size_t index) const {
-    std::lock_guard<std::mutex> lock(mutexes[index]);
+    std::shared_lock<std::mutex> lock(mutexes[index]);
     return data[index];
 }
 
